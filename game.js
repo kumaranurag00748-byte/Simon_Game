@@ -1,5 +1,8 @@
 let gamePattern = [];
 let userClickedPattern = [];
+let started = false;
+var level = 0;
+
 function buttonAnimation(buttonPressed) {
   var activeButton = document.querySelector("." + buttonPressed);
   activeButton.classList.toggle("pressed");
@@ -8,9 +11,7 @@ function buttonAnimation(buttonPressed) {
   }, 100);
 }
 function flash(selector) {
-  $("#" + selector)
-    .fadeOut(100)
-    .fadeIn(100);
+  $("#" + selector).fadeOut(100).fadeIn(100);
 }
 function playSound(key) {
   switch (key) {
@@ -33,9 +34,9 @@ function playSound(key) {
   }
 }
 function nextSequence() {
-  userClickedPattern = [];
   $("#level-title").text("Level " + level);
   level++;
+  userClickedPattern = [];
   var buttonColours = ["green", "red", "yellow", "blue"];
   var randomNumber = Math.floor(4 * Math.random());
   var chosenColour = buttonColours[randomNumber];
@@ -47,37 +48,49 @@ function nextSequence() {
 function check(currentLevel) {
   if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
     if (userClickedPattern.length === gamePattern.length) {
-      setTimeout(function () {
-        nextSequence();
-      }, 1000);
+      setTimeout(nextSequence, 1000);
     }
   } else {
-    var wRong=new Audio("./sounds/wrong.mp3");
+    var wRong = new Audio("./sounds/wrong.mp3");
     wRong.play();
     $("body").addClass("game-over");
     setTimeout(function () {
       $("body").removeClass("game-over");
-    }, 200);
+    }, 2000);
     $("#level-title").text("Game Over, Press Any Key to Restart");
     startOver();
   }
 }
-var level = 0;
 $("body").one("keydown", function () {
-  nextSequence();
+  if (!started) {
+    started = true;
+    nextSequence();
+  }
 });
 $(".btn").on("click", function () {
   var userChosenColour = this.id;
+  if (!started) {
+    started = true;
+    nextSequence();
+    return;
+  }
   userClickedPattern.push(userChosenColour);
   flash(userChosenColour);
   buttonAnimation(userChosenColour);
   playSound(userChosenColour);
-  check(userClickedPattern.length-1);
+  check(userClickedPattern.length - 1);
 });
 
-function startOver(){
-    level = 0;
-    gamePattern = [];
-    userClickedPattern = [];
-    $("#level-title").text("Press A Key to Start");
+function startOver() {
+  
+  level = 0;
+  gamePattern = [];
+  userClickedPattern = [];
+  $("#level-title").text("Press Any Key or Button to Start");
+
+  $("body").one("keydown", function () {
+    nextSequence();
+  });
+  
+
 }
