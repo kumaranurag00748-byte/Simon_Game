@@ -76,7 +76,8 @@ $(".btn").on("click", function () {
 });
 
 function startOver(){
-    var level = 0;
+    level = 0;
     gamePattern = [];
     userClickedPattern = [];
+    $("#level-title").text("Press A Key to Start");
 }
