@@ -58,7 +58,7 @@ function check(currentLevel) {
     setTimeout(function () {
       $("body").removeClass("game-over");
     }, 2000);
-    $("#level-title").text("Game Over, Press Any Key to Restart");
+    $("#level-title").text("Game Over, Press Any Button to Restart");
     startOver();
   }
 }
@@ -90,7 +90,7 @@ function startOver() {
   gamePattern = [];
   userClickedPattern = [];
   started= false;
-  $("#level-title").text("Press Any Key or Button to Start");
+  $("#level-title").text("Press Any Button to Start");
   
   
 
