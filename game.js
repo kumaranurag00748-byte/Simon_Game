@@ -68,12 +68,8 @@ $("body").one("keydown", function () {
   }
 });
 $(".btn").on("click", function () {
+  if (!started) return; 
   var userChosenColour = this.id;
-  if (!started) {
-    started = true;
-    nextSequence();
-    return;
-  }
   userClickedPattern.push(userChosenColour);
   flash(userChosenColour);
   buttonAnimation(userChosenColour);
@@ -86,6 +82,7 @@ function startOver() {
   level = 0;
   gamePattern = [];
   userClickedPattern = [];
+  started= false;
   $("#level-title").text("Press Any Key or Button to Start");
 
   $("body").one("keydown", function () {
