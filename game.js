@@ -34,8 +34,9 @@ function playSound(key) {
   }
 }
 function nextSequence() {
-  $("#level-title").text("Level " + level);
   level++;
+  $("#level-title").text("Level " + level);
+  
   userClickedPattern = [];
   var buttonColours = ["green", "red", "yellow", "blue"];
   var randomNumber = Math.floor(4 * Math.random());
@@ -56,7 +57,7 @@ function check(currentLevel) {
     $("body").addClass("game-over");
     setTimeout(function () {
       $("body").removeClass("game-over");
-    }, 1000);
+    }, 2000);
     $("#level-title").text("Game Over, Press Any Key to Restart");
     startOver();
   }
@@ -68,7 +69,11 @@ $("body").one("keydown", function () {
   }
 });
 $(".btn").on("click", function () {
-  if (!started) return; 
+  if (!started){
+    started= true;
+    nextSequence();
+    return;
+  }  
   var userChosenColour = this.id;
   userClickedPattern.push(userChosenColour);
   flash(userChosenColour);
@@ -84,10 +89,5 @@ function startOver() {
   userClickedPattern = [];
   started= false;
   $("#level-title").text("Press Any Key or Button to Start");
-
-  $("body").one("keydown", function () {
-    nextSequence();
-  });
-  
 
 }
