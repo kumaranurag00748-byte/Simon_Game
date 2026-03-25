@@ -62,7 +62,7 @@ function check(currentLevel) {
     startOver();
   }
 }
-$("body").one("keydown", function () {
+$(document).one("keydown", function () {
   if (!started) {
     started = true;
     nextSequence();
