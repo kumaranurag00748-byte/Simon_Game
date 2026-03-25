@@ -62,7 +62,7 @@ function check(currentLevel) {
     startOver();
   }
 }
-$(document).one("keydown", function () {
+$(document).on("keydown", function () {
   if (!started) {
     started = true;
     nextSequence();
@@ -73,13 +73,15 @@ $(".btn").on("click", function () {
     started= true;
     nextSequence();
     return;
-  }  
+  } 
+
   var userChosenColour = this.id;
   userClickedPattern.push(userChosenColour);
   flash(userChosenColour);
   buttonAnimation(userChosenColour);
   playSound(userChosenColour);
   check(userClickedPattern.length - 1);
+
 });
 
 function startOver() {
@@ -89,5 +91,7 @@ function startOver() {
   userClickedPattern = [];
   started= false;
   $("#level-title").text("Press Any Key or Button to Start");
+  
+  
 
 }
